@@ -23,6 +23,14 @@ public class ExcelWriteDemo {
         cell2.setCellValue("World!");
         cell3.setCellValue(25);
 
+        Row row2 = sheet.createRow(1);
+        Cell cell4 = row2.createCell(0);
+        Cell cell5 = row2.createCell(1);
+        Cell cell6 = row2.createCell(2);
+        cell4.setCellValue("LAST ROW DATA");
+        cell5.setCellValue("!");
+        cell6.setCellValue(36);
+
         // запись на диск
         String path = "C:/Users/af_oleg/Documents/QA_JA_10/data/demo.xlsx";
         try {
