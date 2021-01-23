@@ -18,7 +18,9 @@ public class AutomationPracticeTests {
 
     @BeforeClass(alwaysRun = true)
     public void setUp() throws Exception {
-        driver = new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", "C:/Users/af_oleg/Documents/QA_JA_10/java-maven/drivers/chromedriver.exe");
+        System.setProperty("webdriver.gecko.driver", "C:/Users/af_oleg/Documents/QA_JA_10/java-maven/drivers/geckodriver.exe");
+        driver = new FirefoxDriver();
         baseUrl = "https://www.google.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
