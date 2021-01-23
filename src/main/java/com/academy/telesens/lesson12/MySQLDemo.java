@@ -1,9 +1,17 @@
 package com.academy.telesens.lesson12;
 
+import com.academy.telesens.util.PropertyProvider;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
 
 public class MySQLDemo {
     public static void main(String[] args) {
+        String dbUrl2 = PropertyProvider.get("db.url");
+        System.out.println(dbUrl2);
+
         String url = "jdbc:mysql://localhost:3306/mobile?user=root&password=root";
 //        String url = args[0];
         String sqlInsert = "INSERT INTO subscriber " +
