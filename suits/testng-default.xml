@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="default-suite">
+    <test name="automation practice demo">
+        <classes>
+            <class name="com.academy.test.AutomationPracticeTests" />
+        </classes>
+    </test>
+</suite>

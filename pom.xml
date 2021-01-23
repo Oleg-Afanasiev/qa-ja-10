@@ -16,15 +16,45 @@
     </properties>
 
     <dependencies>
+        <!--excel-->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>4.1.2</version>
         </dependency>
+        <!--бд mysql-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.23</version>
         </dependency>
+        <!--Selenium-->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.0.0-alpha-7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.3.0</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M4</version>
+                <configuration>
+                    <!--Путь к конфигурации testng.xml-->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>suits/testng-default.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <argLine>-Dtestng.dtd.http=true</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
