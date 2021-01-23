@@ -3,6 +3,7 @@ package com.academy.test;
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
+import com.academy.telesens.util.PropertyProvider;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 import static org.testng.Assert.*;
@@ -18,8 +19,8 @@ public class AutomationPracticeTests {
 
     @BeforeClass(alwaysRun = true)
     public void setUp() throws Exception {
-        System.setProperty("webdriver.chrome.driver", "C:/Users/af_oleg/Documents/QA_JA_10/java-maven/drivers/chromedriver.exe");
-        System.setProperty("webdriver.gecko.driver", "C:/Users/af_oleg/Documents/QA_JA_10/java-maven/drivers/geckodriver.exe");
+        System.setProperty("webdriver.chrome.driver", PropertyProvider.get("driver.chrome"));
+        System.setProperty("webdriver.gecko.driver", PropertyProvider.get("driver.firefox"));
         driver = new FirefoxDriver();
         baseUrl = "https://www.google.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
