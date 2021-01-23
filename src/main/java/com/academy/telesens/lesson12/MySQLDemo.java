@@ -12,6 +12,8 @@ public class MySQLDemo {
         String dbUrl2 = PropertyProvider.get("db.url");
         System.out.println(dbUrl2);
 
+        System.out.println(PropertyProvider.get("demo.key"));
+
         String url = "jdbc:mysql://localhost:3306/mobile?user=root&password=root";
 //        String url = args[0];
         String sqlInsert = "INSERT INTO subscriber " +
