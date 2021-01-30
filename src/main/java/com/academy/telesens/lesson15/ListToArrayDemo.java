@@ -53,6 +53,14 @@ public class ListToArrayDemo {
         System.out.println(Arrays.deepToString(result2));
         System.out.println(Arrays.deepToString(result3));
         System.out.println(Arrays.deepToString(result4));
+
+        List<String[]> listStr = new ArrayList<>();
+        listStr.add(new String[] {"1", "2", "3"});
+        listStr.add(new String[] {"11", "22", "33"});
+        listStr.add(new String[] {"111", "222", "333"});
+
+        Object[][] result5 = listStr.toArray(String[][]::new);
+        System.out.println(Arrays.deepToString(result5));
     }
 
     public static String[][] listToString(List<List<String>> list) {
