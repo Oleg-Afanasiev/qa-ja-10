@@ -37,6 +37,10 @@ public class AutomationPracticeTests {
                 System.setProperty("webdriver.gecko.driver", PropertyProvider.get("driver.firefox"));
                 driver = new FirefoxDriver();
                 break;
+
+            default:
+                throw new IllegalArgumentException(
+                        String.format("Browser %s not supported", browser));
         }
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
@@ -69,6 +73,7 @@ public class AutomationPracticeTests {
 
     @AfterClass(alwaysRun = true)
     public void tearDown() throws Exception {
-        driver.quit();
+        if (driver != null)
+            driver.quit();
     }
 }
