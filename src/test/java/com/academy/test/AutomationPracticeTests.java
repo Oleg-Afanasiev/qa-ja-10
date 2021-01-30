@@ -4,15 +4,13 @@ import com.academy.telesens.util.PropertyProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeGroups;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.testng.asserts.Assertion;
 
 import java.time.Duration;
@@ -24,19 +22,29 @@ public class AutomationPracticeTests {
 
     @BeforeGroups
     public void setUpGroup() {
-
     }
 
+    @Parameters("browser")
     @BeforeClass(alwaysRun = true)
-    public void setUp()  {
-        System.setProperty("webdriver.chrome.driver", PropertyProvider.get("driver.chrome"));
-        System.setProperty("webdriver.gecko.driver", PropertyProvider.get("driver.firefox"));
-        driver = new FirefoxDriver();
+    public void setUp(@Optional("chrome") String browser)  {
+        switch (browser) {
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", PropertyProvider.get("driver.chrome"));
+                driver = new ChromeDriver();
+                break;
+
+            case "firefox":
+                System.setProperty("webdriver.gecko.driver", PropertyProvider.get("driver.firefox"));
+                driver = new FirefoxDriver();
+                break;
+        }
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         driver.manage().window().maximize();
     }
 
     @Test
+    @Ignore
     public void testAuth() {
         driver.get(baseUrl);
         WebElement elSignIn = driver.findElement(By.linkText("Sign in"));
