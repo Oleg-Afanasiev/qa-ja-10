@@ -18,5 +18,37 @@ public class ListToArrayDemo {
         System.out.println(Arrays.toString(strArray2));
         System.out.println(Arrays.toString(strArray3));
 
+        List<List<String>> list2D = new ArrayList<>();
+        List<String> listItem1 = new ArrayList<>(Arrays.asList("one", "two", "three"));
+        List<String> listItem2 = new ArrayList<>(Arrays.asList("four", "five", "six"));
+        List<String> listItem3 = new ArrayList<>(Arrays.asList("1", "2", "3"));
+
+        list2D.add(listItem1);
+        list2D.add(listItem2);
+        list2D.add(listItem3);
+
+        Object[][] result1 = new Object[list2D.size()][3];
+        Object[][] result2 = new Object[list2D.size()][3];
+
+        // Перебор вложенным циклом
+        for (int i=0; i < list2D.size(); i++) {
+            for (int j = 0; j < 3; j++) {
+                result1[i][j] = list2D.get(i).get(j);
+            }
+        }
+
+        // Перебор только внешнего списка
+        for (int i=0; i < list2D.size(); i++) {
+            result2[i] = list2D.get(i).toArray(String[]::new);
+        }
+
+        // Использование stream API
+        String[][] result3 = list2D.stream()
+                .map(arr -> arr.toArray(String[]::new)) // List<String>,List<String>,... => String[], String[],...
+                .toArray(String[][]::new); // String[], String[], ... => String[][]
+
+        System.out.println(Arrays.deepToString(result1));
+        System.out.println(Arrays.deepToString(result2));
+        System.out.println(Arrays.deepToString(result3));
     }
 }
