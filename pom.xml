@@ -51,6 +51,9 @@
         <!--by default-->
         <profile>
             <id>nexus</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                     <!--плагин - управляет запуском тестов-->

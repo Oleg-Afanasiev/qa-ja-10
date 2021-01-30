@@ -1,53 +1,18 @@
 package com.academy.test;
 
-import com.academy.telesens.util.PropertyProvider;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.*;
-import org.testng.asserts.Assertion;
+import org.testng.annotations.BeforeGroups;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
+import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class AutomationPracticeTests {
-    private WebDriver driver;
+public class AutomationPracticeTests extends BaseTest {
     private String baseUrl = "http://automationpractice.com/index.php";
-
-    @BeforeGroups
-    public void setUpGroup() {
-    }
-
-    @Parameters("browser")
-    @BeforeClass(alwaysRun = true)
-    public void setUp(@Optional("chrome") String browser)  {
-        switch (browser) {
-            case "chrome":
-                System.setProperty("webdriver.chrome.driver", PropertyProvider.get("driver.chrome"));
-                driver = new ChromeDriver();
-                break;
-
-            case "firefox":
-                System.setProperty("webdriver.gecko.driver", PropertyProvider.get("driver.firefox"));
-                driver = new FirefoxDriver();
-                break;
-
-            default:
-                throw new IllegalArgumentException(
-                        String.format("Browser %s not supported", browser));
-        }
-
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-        driver.manage().window().maximize();
-    }
 
     @Test(dataProvider = "authDataProvider")
     public void testAuth(String userName, String password, String errMsgExpected) {
@@ -95,11 +60,5 @@ public class AutomationPracticeTests {
 //        return new Object[][]{
 //            case1, case2
 //        };
-    }
-
-    @AfterClass(alwaysRun = true)
-    public void tearDown() throws Exception {
-        if (driver != null)
-            driver.quit();
     }
 }
