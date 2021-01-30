@@ -32,7 +32,7 @@ public class ListToArrayDemo {
 
         // Перебор вложенным циклом
         for (int i=0; i < list2D.size(); i++) {
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < list2D.get(i).size(); j++) {
                 result1[i][j] = list2D.get(i).get(j);
             }
         }
@@ -47,8 +47,17 @@ public class ListToArrayDemo {
                 .map(arr -> arr.toArray(String[]::new)) // List<String>,List<String>,... => String[], String[],...
                 .toArray(String[][]::new); // String[], String[], ... => String[][]
 
+        String[][] result4 = listToString(list2D);
+
         System.out.println(Arrays.deepToString(result1));
         System.out.println(Arrays.deepToString(result2));
         System.out.println(Arrays.deepToString(result3));
+        System.out.println(Arrays.deepToString(result4));
+    }
+
+    public static String[][] listToString(List<List<String>> list) {
+        return list.stream()
+                .map(arr -> arr.toArray(String[]::new)) // List<String>,List<String>,... => String[], String[],...
+                .toArray(String[][]::new);
     }
 }
