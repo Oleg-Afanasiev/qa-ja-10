@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="default-suite">
     <test name="automation practice demo">
-        <parameter name="browser" value="firefox-ext"></parameter>
+        <parameter name="browser" value="firefox" />
         <classes>
             <class name="com.academy.test.AutomationPracticeTests" />
         </classes>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="cross-browser-suite">
+    <test name="automation practice chrome">
+        <parameter name="browser" value="chrome" />
+        <classes>
+            <class name="com.academy.test.AutomationPracticeTests" />
+        </classes>
+    </test>
+    <test name="automation practice firefox">
+        <parameter name="browser" value="firefox" />
+        <classes>
+            <class name="com.academy.test.AutomationPracticeTests" />
+        </classes>
+    </test>
+</suite>

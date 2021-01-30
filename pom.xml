@@ -47,20 +47,45 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <!--плагин - управляет запуском тестов-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M4</version>
-                <configuration>
-                    <!--Путь к конфигурации testng.xml-->
-                    <suiteXmlFiles>
-                        <suiteXmlFile>suits/testng-default.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <profiles>
+        <!--by default-->
+        <profile>
+            <id>nexus</id>
+            <build>
+                <plugins>
+                    <!--плагин - управляет запуском тестов-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M4</version>
+                        <configuration>
+                            <!--Путь к конфигурации testng.xml-->
+                            <suiteXmlFiles>
+                                <suiteXmlFile>suits/testng-default.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>suite</id>
+            <build>
+                <plugins>
+                    <!--плагин - управляет запуском тестов-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M4</version>
+                        <configuration>
+                            <!--Путь к конфигурации testng.xml-->
+                            <suiteXmlFiles>
+                                <suiteXmlFile>${suite}</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
