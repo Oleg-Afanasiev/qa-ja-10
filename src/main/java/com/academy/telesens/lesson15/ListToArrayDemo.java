@@ -61,6 +61,8 @@ public class ListToArrayDemo {
 
         Object[][] result5 = listStr.toArray(String[][]::new);
         System.out.println(Arrays.deepToString(result5));
+
+        Object[] arr = new String[]{"one", "two"}; // correct
     }
 
     public static String[][] listToString(List<List<String>> list) {
