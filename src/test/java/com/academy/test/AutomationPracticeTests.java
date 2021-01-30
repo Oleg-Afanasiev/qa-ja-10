@@ -11,21 +11,29 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class AutomationPracticeTests {
     private WebDriver driver;
     private String baseUrl = "http://automationpractice.com/index.php";
 
+    @BeforeGroups
+    public void setUpGroup() {
+
+    }
+
     @BeforeClass(alwaysRun = true)
-    public void setUp() throws Exception {
+    public void setUp()  {
         System.setProperty("webdriver.chrome.driver", PropertyProvider.get("driver.chrome"));
         System.setProperty("webdriver.gecko.driver", PropertyProvider.get("driver.firefox"));
         driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        driver.manage().window().maximize();
     }
 
     @Test
