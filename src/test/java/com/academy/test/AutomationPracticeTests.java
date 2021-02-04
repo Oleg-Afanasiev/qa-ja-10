@@ -27,7 +27,7 @@ public class AutomationPracticeTests extends BaseTest {
         driver.findElement(By.id("passwd")).sendKeys(password);
         driver.findElement(By.xpath("//button[@id='SubmitLogin']/span")).click();
 
-        String errMsgActual = driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/ol/li")).getText();
+        String errMsgActual = driver.findElement(By.xpath("//*[@id='center_column']/div[1]/ol/li")).getText();
         Assert.assertEquals(errMsgActual, errMsgExpected);
     }
 
