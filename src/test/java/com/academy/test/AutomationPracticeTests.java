@@ -5,8 +5,9 @@ import com.academy.page.LoginPage;
 import com.academy.page.MyAccountPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutomationPracticeTests extends BaseTest {
+    private static Logger LOG = LoggerFactory.getLogger(AutomationPracticeTests.class);
+
     private String baseUrl = "http://automationpractice.com/index.php";
 
     @Test(dataProvider = "authDataProvider")
@@ -78,6 +81,8 @@ public class AutomationPracticeTests extends BaseTest {
 
         String userNameActual = myAccountPage.getUserName();
         Assert.assertEquals(userNameActual, expectedUserName);
+
+//        myAccountPage.logout();
     }
 
     @Test

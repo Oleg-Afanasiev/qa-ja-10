@@ -3,8 +3,12 @@ package com.academy.page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HomePage extends BasePage {
+    private static Logger LOG = LoggerFactory.getLogger(HomePage.class);
+
     private String baseUrl;
 
     @FindBy(linkText = "Sign in")
@@ -16,6 +20,7 @@ public class HomePage extends BasePage {
     }
 
     public HomePage goToHome() {
+        LOG.debug("HomePage. goToHome {}", baseUrl);
         driver.get(baseUrl);
         return this;
     }
