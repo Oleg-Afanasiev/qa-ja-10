@@ -43,6 +43,11 @@ public class LoginPage extends BasePage {
         return this;
     }
 
+    public MyAccountPage submitSuccess() {
+        submitButton.click();
+        return new MyAccountPage(driver);
+    }
+
     public String getErrorMessage() {
         return errMessageEl.getText();
     }

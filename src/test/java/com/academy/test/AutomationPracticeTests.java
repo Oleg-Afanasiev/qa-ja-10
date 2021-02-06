@@ -2,6 +2,7 @@ package com.academy.test;
 
 import com.academy.page.HomePage;
 import com.academy.page.LoginPage;
+import com.academy.page.MyAccountPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -66,6 +67,19 @@ public class AutomationPracticeTests extends BaseTest {
         Assert.assertEquals(errMsgActual, errMsgExpected);
     }
 
+    @Test(dataProvider = "authSuccessDataProvider")
+    public void testAuthSuccess(String login, String password, String expectedUserName) {
+        MyAccountPage myAccountPage = new HomePage(driver, baseUrl)
+                .goToHome()
+                .login()
+                .inputLogin(login)
+                .inputPassword(password)
+                .submitSuccess();
+
+        String userNameActual = myAccountPage.getUserName();
+        Assert.assertEquals(userNameActual, expectedUserName);
+    }
+
     @Test
     @Ignore
     public void testWomenCategory() {
@@ -95,5 +109,12 @@ public class AutomationPracticeTests extends BaseTest {
 //        return new Object[][]{
 //            case1, case2
 //        };
+    }
+
+    @DataProvider(name = "authSuccessDataProvider")
+    public Object[][] authSuccessDataProvider() {
+        return new Object[][] {
+                {"oleg.kh81@gmail.com", "qwerty", "OLEG AFANASIEV"}
+        };
     }
 }
