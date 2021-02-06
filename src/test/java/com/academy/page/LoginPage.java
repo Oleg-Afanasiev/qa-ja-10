@@ -3,9 +3,8 @@ package com.academy.page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage {
+public class LoginPage extends BasePage {
     @FindBy(id="email")
     private WebElement loginField;
 
@@ -20,20 +19,22 @@ public class LoginPage {
     private WebElement errMessageEl;
 
     public LoginPage(WebDriver driver) {
-        PageFactory.initElements(driver, this); // необходимо, чтобы проинициализировать аннотированные поля
+        super(driver);
     }
 
     public LoginPage inputLogin(String userName) {
-        loginField.click();
-        loginField.clear();
-        loginField.sendKeys(userName);
+//        loginField.click();
+//        loginField.clear();
+//        loginField.sendKeys(userName);
+        inputField(loginField, userName);
         return this;
     }
 
     public LoginPage inputPassword(String password) {
-        passwordField.click();
-        passwordField.clear();
-        passwordField.sendKeys(password);
+//        passwordField.click();
+//        passwordField.clear();
+//        passwordField.sendKeys(password);
+        inputField(passwordField, password);
         return this;
     }
 

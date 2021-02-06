@@ -51,6 +51,21 @@ public class AutomationPracticeTests extends BaseTest {
         Assert.assertEquals(errMsgActual, errMsgExpected);
     }
 
+    @Test(dataProvider = "authDataProvider")
+    public void testAuthUsingPageObject2(String userName, String password, String errMsgExpected) {
+        // Шаги
+        LoginPage loginPage = new HomePage(driver, baseUrl)
+                .goToHome()
+                .login()
+                .inputLogin(userName)
+                .inputPassword(password)
+                .submit();
+
+        // Проверка
+        String errMsgActual = loginPage.getErrorMessage();
+        Assert.assertEquals(errMsgActual, errMsgExpected);
+    }
+
     @Test
     @Ignore
     public void testWomenCategory() {
