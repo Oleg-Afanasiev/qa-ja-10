@@ -1,5 +1,7 @@
 package com.academy.test;
 
+import com.academy.page.HomePage;
+import com.academy.page.LoginPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -19,15 +21,33 @@ public class AutomationPracticeTests extends BaseTest {
         driver.get(baseUrl);
         WebElement elSignIn = driver.findElement(By.linkText("Sign in"));
         elSignIn.click();
+
         driver.findElement(By.id("email")).click();
         driver.findElement(By.id("email")).clear();
         driver.findElement(By.id("email")).sendKeys(userName);
+
         driver.findElement(By.id("passwd")).click();
         driver.findElement(By.id("passwd")).clear();
         driver.findElement(By.id("passwd")).sendKeys(password);
+
         driver.findElement(By.xpath("//button[@id='SubmitLogin']/span")).click();
 
         String errMsgActual = driver.findElement(By.xpath("//*[@id='center_column']/div[1]/ol/li")).getText();
+        Assert.assertEquals(errMsgActual, errMsgExpected);
+    }
+
+    @Test(dataProvider = "authDataProvider")
+    public void testAuthUsingPageObject(String userName, String password, String errMsgExpected) {
+        // Шаги
+        HomePage homePage = new HomePage(driver, baseUrl);
+        homePage = homePage.goToHome();
+        LoginPage loginPage = homePage.login();
+        loginPage.inputLogin(userName);
+        loginPage.inputPassword(password);
+        loginPage.submit();
+
+        // Проверка
+        String errMsgActual = loginPage.getErrorMessage();
         Assert.assertEquals(errMsgActual, errMsgExpected);
     }
 

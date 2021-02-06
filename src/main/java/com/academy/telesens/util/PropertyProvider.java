@@ -11,7 +11,7 @@ import java.util.Properties;
 public class PropertyProvider {
     private static Logger LOG = LoggerFactory.getLogger(PropertyProvider.class);
 
-    private static final String DEFAULT_PROP_FILE = "default-cfg1.properties";
+    private static final String DEFAULT_PROP_FILE = "default-cfg.properties";
     private static Properties prop;
 
     // блок статической инициализации
