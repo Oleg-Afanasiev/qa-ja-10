@@ -2,7 +2,6 @@ package com.academy.test;
 
 import com.academy.telesens.util.PropertyProvider;
 import org.openqa.selenium.*;
-import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

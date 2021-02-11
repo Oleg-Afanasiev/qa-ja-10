@@ -80,7 +80,7 @@ public class AutomationPracticeTests extends BaseTest {
                 .submitSuccess();
 
         String userNameActual = myAccountPage.getUserName();
-        Assert.assertEquals(userNameActual, expectedUserName);
+        AssertWrapper.assertEquals(userNameActual, expectedUserName);
 
 //        myAccountPage.logout();
     }
