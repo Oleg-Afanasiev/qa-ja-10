@@ -27,6 +27,7 @@ public class BaseTest {
 
     protected EventFiringWebDriver  driver;
     private BrowserMobProxy proxy;
+    private DetailWebDriverEventListener eventListener;
 
     @Parameters("browser")
     @BeforeClass(alwaysRun = true)
@@ -67,7 +68,8 @@ public class BaseTest {
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-        driver.register(new DetailWebDriverEventListener());
+        eventListener = new DetailWebDriverEventListener();
+        driver.register(eventListener);
     }
 
     @AfterClass(alwaysRun = true)
@@ -88,5 +90,9 @@ public class BaseTest {
     @AfterMethod
     public void testTearDownTest(Method method) {
         LOG.info("Test '{}' finish.", method);
+    }
+
+    protected void makeScreenshot() {
+        eventListener.makeScreenshot(driver);
     }
 }

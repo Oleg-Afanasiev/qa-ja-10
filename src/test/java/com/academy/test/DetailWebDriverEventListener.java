@@ -52,10 +52,10 @@ public class DetailWebDriverEventListener extends AbstractWebDriverEventListener
     // Все ошибки будут переданы в этот метод
     public void onException(Throwable throwable, WebDriver driver) {
         LOG.error("Error. Details: {}", throwable.getMessage());
-//        makeScreenshot(driver);
+        makeScreenshot(driver);
     }
 
-    private void makeScreenshot(WebDriver driver) {
+    public void makeScreenshot(WebDriver driver) {
         String screenshotDir = PropertyProvider.get("screenshot.dir");
         File tmp = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         String screenName = "screen_" + System.currentTimeMillis()+".png";
