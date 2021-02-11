@@ -51,9 +51,9 @@ public class BaseTest {
                 options.addArguments("--ignore-certificate-errors");
                 proxy.newHar("automation");
 
-//                LoggingPreferences logPrefs = new LoggingPreferences();
-//                logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
-//                options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+                LoggingPreferences logPrefs = new LoggingPreferences();
+                logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+                options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 
                 driver = new EventFiringWebDriver(new ChromeDriver(options));
                 break;
@@ -81,6 +81,7 @@ public class BaseTest {
         for (int i = 0; i < entries.size(); i++) {
             HarEntry item = entries.get(i);
             LOG_TRAFFIC.debug(item.getResponse().getStatus() + ":" + item.getRequest().getUrl());
+            // LOG_TRAFFIC.debug(item.getRequest().getHeaders().toString());
         }
 
         if (driver != null)

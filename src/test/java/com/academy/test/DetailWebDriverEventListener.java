@@ -2,6 +2,7 @@ package com.academy.test;
 
 import com.academy.telesens.util.PropertyProvider;
 import org.openqa.selenium.*;
+import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +25,11 @@ public class DetailWebDriverEventListener extends AbstractWebDriverEventListener
 
     @Override
     public void afterNavigateTo(String url, WebDriver driver) {
-//        LOG_BROWSER.debug("Navigated to {}", url);
-//        driver.manage().logs().get(LogType.BROWSER).forEach(e->LOG_BROWSER.debug(e.getMessage()));
-//
-//        LOG_PERFORMANCE.debug("Navigated to {}", url);
-//        driver.manage().logs().get(LogType.PERFORMANCE).forEach(e->LOG_PERFORMANCE.debug(e.getMessage()));
+        LOG_BROWSER.debug("Navigated to {}", url);
+        driver.manage().logs().get(LogType.BROWSER).forEach(e->LOG_BROWSER.debug(e.getMessage()));
+
+        LOG_PERFORMANCE.debug("Navigated to {}", url);
+        driver.manage().logs().get(LogType.PERFORMANCE).forEach(e->LOG_PERFORMANCE.debug(e.getMessage()));
     }
 
     @Override
