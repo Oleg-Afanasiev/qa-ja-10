@@ -18,7 +18,6 @@ public class DetailWebDriverEventListener extends AbstractWebDriverEventListener
     protected static final Logger LOG_BROWSER = LoggerFactory.getLogger("BROWSER");
     protected static final Logger LOG_PERFORMANCE = LoggerFactory.getLogger("PERFORMANCE");
 
-
     @Override
     public void beforeNavigateTo(String url, WebDriver driver) {
         LOG.info("go to url {}", url);
