@@ -5,6 +5,7 @@ import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.client.ClientUtil;
 import net.lightbody.bmp.core.har.Har;
+import net.lightbody.bmp.core.har.HarEntry;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -19,6 +20,7 @@ import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
+import java.util.List;
 import java.util.logging.Level;
 
 public class BaseTest {
@@ -38,22 +40,22 @@ public class BaseTest {
 
                 ChromeOptions options = new ChromeOptions();
 
-                LoggingPreferences logPrefs = new LoggingPreferences();
-                logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
-                options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
-
-//                proxy = new BrowserMobProxyServer();
-//                proxy.start(1001);
+                proxy = new BrowserMobProxyServer();
+                proxy.start(1001);
 
                 // get the Selenium proxy object
-//                Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
-//
-//                // configure it as a desired capability
-//                options.setCapability(CapabilityType.PROXY, seleniumProxy);
-//                options.addArguments("--ignore-certificate-errors");
-//                proxy.newHar("automation");
+                Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
 
-                driver = new EventFiringWebDriver(new ChromeDriver());
+                // configure it as a desired capability
+                options.setCapability(CapabilityType.PROXY, seleniumProxy);
+                options.addArguments("--ignore-certificate-errors");
+                proxy.newHar("automation");
+
+//                LoggingPreferences logPrefs = new LoggingPreferences();
+//                logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+//                options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+
+                driver = new EventFiringWebDriver(new ChromeDriver(options));
                 break;
 
             case "firefox":
@@ -74,8 +76,12 @@ public class BaseTest {
 
     @AfterClass(alwaysRun = true)
     public void tearDown() throws Exception {
-//        Har har = proxy.endHar();
-//        har.getLog().getEntries().forEach(l -> LOG_TRAFFIC.debug(l.getResponse().getStatus() + ":" + l.getRequest().getUrl()));
+        Har har = proxy.endHar();
+        List<HarEntry> entries = har.getLog().getEntries();
+        for (int i = 0; i < entries.size(); i++) {
+            HarEntry item = entries.get(i);
+            LOG_TRAFFIC.debug(item.getResponse().getStatus() + ":" + item.getRequest().getUrl());
+        }
 
         if (driver != null)
             driver.quit();
