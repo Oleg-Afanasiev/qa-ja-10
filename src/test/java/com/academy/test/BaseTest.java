@@ -42,16 +42,16 @@ public class BaseTest {
                 logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
                 options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 
-                proxy = new BrowserMobProxyServer();
-                proxy.start(1001);
+//                proxy = new BrowserMobProxyServer();
+//                proxy.start(1001);
 
                 // get the Selenium proxy object
-                Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
-
-                // configure it as a desired capability
-                options.setCapability(CapabilityType.PROXY, seleniumProxy);
-                options.addArguments("--ignore-certificate-errors");
-                proxy.newHar("automation");
+//                Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+//
+//                // configure it as a desired capability
+//                options.setCapability(CapabilityType.PROXY, seleniumProxy);
+//                options.addArguments("--ignore-certificate-errors");
+//                proxy.newHar("automation");
 
                 driver = new EventFiringWebDriver(new ChromeDriver());
                 break;
@@ -74,8 +74,8 @@ public class BaseTest {
 
     @AfterClass(alwaysRun = true)
     public void tearDown() throws Exception {
-        Har har = proxy.endHar();
-        har.getLog().getEntries().forEach(l -> LOG_TRAFFIC.debug(l.getResponse().getStatus() + ":" + l.getRequest().getUrl()));
+//        Har har = proxy.endHar();
+//        har.getLog().getEntries().forEach(l -> LOG_TRAFFIC.debug(l.getResponse().getStatus() + ":" + l.getRequest().getUrl()));
 
         if (driver != null)
             driver.quit();
