@@ -12,7 +12,7 @@ public class LoginPage extends BasePage {
     private WebElement passwordField;
 
 //    @FindBy(xpath = "//button[@id='SubmitLogin']/span")
-    @FindBy(id = "SubmitLogin")
+    @FindBy(id = "SubmitLogin1")
     private WebElement submitButton;
 
     @FindBy(xpath = "//*[@id='center_column']/div[1]/ol/li")
