@@ -1,13 +1,13 @@
 package com.academy.bdd;
 
-import io.cucumber.testng.CucumberFeatureWrapper;
 import io.cucumber.testng.CucumberOptions;
-import io.cucumber.testng.PickleEventWrapper;
+import io.cucumber.testng.FeatureWrapper;
+import io.cucumber.testng.PickleWrapper;
+import io.cucumber.testng.TestNGCucumberRunner;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import io.cucumber.testng.TestNGCucumberRunner;
 
 import java.io.IOException;
 
@@ -28,8 +28,8 @@ public class AuthTests {
     }
 
     @Test(groups = "bdd", description = "Runs Cucumber Feature", dataProvider = "features")
-    public void testLogin(PickleEventWrapper pickleEvent, CucumberFeatureWrapper cucumberFeature) throws Throwable {
-        testNGCucumberRunner.runScenario(pickleEvent.getPickleEvent());
+    public void testLogin(PickleWrapper pickleEvent, FeatureWrapper cucumberFeature) throws Throwable {
+        testNGCucumberRunner.runScenario(pickleEvent.getPickle());
     }
 
     @DataProvider
