@@ -17,4 +17,8 @@ public class MyAccountPage extends BasePage {
     public String getUserName() {
         return userNameEl.getText();
     }
+
+    public HomePage logout() {
+        return new HomePage(driver, "");
+    }
 }
