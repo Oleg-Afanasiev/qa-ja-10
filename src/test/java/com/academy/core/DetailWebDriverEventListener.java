@@ -18,6 +18,14 @@ public class DetailWebDriverEventListener extends AbstractWebDriverEventListener
     protected static final Logger LOG_BROWSER = LoggerFactory.getLogger("BROWSER");
     protected static final Logger LOG_PERFORMANCE = LoggerFactory.getLogger("PERFORMANCE");
 
+    private boolean logPerformance; // false by default
+    private boolean logBrowser;
+
+    public DetailWebDriverEventListener(boolean logPerformance, boolean logBrowser) {
+        this.logPerformance = logPerformance;
+        this.logBrowser = logBrowser;
+    }
+
     @Override
     public void beforeNavigateTo(String url, WebDriver driver) {
         LOG.info("go to url {}", url);
@@ -25,11 +33,15 @@ public class DetailWebDriverEventListener extends AbstractWebDriverEventListener
 
     @Override
     public void afterNavigateTo(String url, WebDriver driver) {
-        LOG_BROWSER.debug("Navigated to {}", url);
-        driver.manage().logs().get(LogType.BROWSER).forEach(e->LOG_BROWSER.debug(e.getMessage()));
+        if (logBrowser) {
+            LOG_BROWSER.debug("Navigated to {}", url);
+            driver.manage().logs().get(LogType.BROWSER).forEach(e -> LOG_BROWSER.debug(e.getMessage()));
+        }
 
-        LOG_PERFORMANCE.debug("Navigated to {}", url);
-        driver.manage().logs().get(LogType.PERFORMANCE).forEach(e->LOG_PERFORMANCE.debug(e.getMessage()));
+        if (logPerformance) {
+            LOG_PERFORMANCE.debug("Navigated to {}", url);
+            driver.manage().logs().get(LogType.PERFORMANCE).forEach(e -> LOG_PERFORMANCE.debug(e.getMessage()));
+        }
     }
 
     @Override

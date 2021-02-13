@@ -31,7 +31,7 @@ public class BaseTest {
     private BrowserMobProxy proxy;
     private DetailWebDriverEventListener eventListener;
 
-    private boolean logPerformance;
+    private boolean logPerformance; // false by default
     private boolean logBrowser;
     private boolean logTraffic;
 
@@ -45,22 +45,14 @@ public class BaseTest {
 
                 ChromeOptions options = new ChromeOptions();
 
-                // HTTP-Traffic
-                proxy = new BrowserMobProxyServer();
-                proxy.start(1001);
-
-                // get the Selenium proxy object
-                Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
-
-                // configure it as a desired capability
-                options.setCapability(CapabilityType.PROXY, seleniumProxy);
-                options.addArguments("--ignore-certificate-errors");
-                proxy.newHar("automation");
+                if (logTraffic) {
+                    initProxyForTraffic(options);
+                }
 
                 // Performance
-                LoggingPreferences logPrefs = new LoggingPreferences();
-                logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
-                options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+                if (logPerformance) {
+                    initLogPerformance(options);
+                }
 
                 driver = new EventFiringWebDriver(new ChromeDriver(options));
                 break;
@@ -77,18 +69,14 @@ public class BaseTest {
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-        eventListener = new DetailWebDriverEventListener();
+        eventListener = new DetailWebDriverEventListener(logPerformance, logBrowser);
         driver.register(eventListener);
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDown() throws Exception {
-        Har har = proxy.endHar();
-        List<HarEntry> entries = har.getLog().getEntries();
-        for (int i = 0; i < entries.size(); i++) {
-            HarEntry item = entries.get(i);
-            LOG_TRAFFIC.debug(item.getResponse().getStatus() + ":" + item.getRequest().getUrl());
-            // LOG_TRAFFIC.debug(item.getRequest().getHeaders().toString());
+        if (logTraffic) {
+            makeLogTraffic();
         }
 
         if (driver != null)
@@ -109,9 +97,40 @@ public class BaseTest {
     protected void makeScreenshot() {
         eventListener.makeScreenshot(driver);
     }
+
     private void initCfg() {
         logPerformance = PropertyProvider.getBoolean("log.performance");
         logBrowser = PropertyProvider.getBoolean("log.browser");
         logTraffic = PropertyProvider.getBoolean("log.traffic");
+    }
+
+    private void initProxyForTraffic(ChromeOptions options) {
+        // HTTP-Traffic
+        proxy = new BrowserMobProxyServer();
+        proxy.start(1001);
+
+        // get the Selenium proxy object
+        Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+
+        // configure it as a desired capability
+        options.setCapability(CapabilityType.PROXY, seleniumProxy);
+        options.addArguments("--ignore-certificate-errors");
+        proxy.newHar("automation");
+    }
+
+    private void initLogPerformance(ChromeOptions options) {
+        LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
+        options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+    }
+
+    private void makeLogTraffic() {
+        Har har = proxy.endHar();
+        List<HarEntry> entries = har.getLog().getEntries();
+        for (int i = 0; i < entries.size(); i++) {
+            HarEntry item = entries.get(i);
+            LOG_TRAFFIC.debug(item.getResponse().getStatus() + ":" + item.getRequest().getUrl());
+            // LOG_TRAFFIC.debug(item.getRequest().getHeaders().toString());
+        }
     }
 }
