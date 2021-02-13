@@ -1,4 +1,4 @@
-package com.academy.core;
+package com.academy.ddt.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

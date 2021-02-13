@@ -1,7 +1,7 @@
-package com.academy.test;
+package com.academy.ddt.test;
 
-import com.academy.core.AssertWrapper;
-import com.academy.core.BaseTest;
+import com.academy.ddt.core.AssertWrapper;
+import com.academy.ddt.core.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;

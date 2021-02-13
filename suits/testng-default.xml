@@ -4,7 +4,7 @@
     <test name="automation practice demo">
         <parameter name="browser" value="firefox" />
         <classes>
-            <class name="com.academy.test.AutomationPracticeTests" />
+            <class name="com.academy.ddt.test.AutomationPracticeTests" />
         </classes>
     </test>
 </suite>

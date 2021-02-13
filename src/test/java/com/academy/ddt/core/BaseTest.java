@@ -1,4 +1,4 @@
-package com.academy.core;
+package com.academy.ddt.core;
 
 import com.academy.telesens.util.PropertyProvider;
 import net.lightbody.bmp.BrowserMobProxy;
