@@ -1,4 +1,4 @@
-package com.academy.test;
+package com.academy.core;
 
 import com.academy.telesens.util.PropertyProvider;
 import net.lightbody.bmp.BrowserMobProxy;
@@ -31,15 +31,21 @@ public class BaseTest {
     private BrowserMobProxy proxy;
     private DetailWebDriverEventListener eventListener;
 
+    private boolean logPerformance;
+    private boolean logBrowser;
+    private boolean logTraffic;
+
     @Parameters("browser")
     @BeforeClass(alwaysRun = true)
     public void setUp(@Optional("chrome") String browser)  {
+        initCfg();
         switch (browser) {
             case "chrome":
                 System.setProperty("webdriver.chrome.driver", PropertyProvider.get("driver.chrome"));
 
                 ChromeOptions options = new ChromeOptions();
 
+                // HTTP-Traffic
                 proxy = new BrowserMobProxyServer();
                 proxy.start(1001);
 
@@ -51,6 +57,7 @@ public class BaseTest {
                 options.addArguments("--ignore-certificate-errors");
                 proxy.newHar("automation");
 
+                // Performance
                 LoggingPreferences logPrefs = new LoggingPreferences();
                 logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
                 options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
@@ -101,5 +108,10 @@ public class BaseTest {
 
     protected void makeScreenshot() {
         eventListener.makeScreenshot(driver);
+    }
+    private void initCfg() {
+        logPerformance = PropertyProvider.getBoolean("log.performance");
+        logBrowser = PropertyProvider.getBoolean("log.browser");
+        logTraffic = PropertyProvider.getBoolean("log.traffic");
     }
 }

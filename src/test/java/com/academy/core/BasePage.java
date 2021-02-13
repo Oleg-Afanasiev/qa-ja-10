@@ -1,4 +1,4 @@
-package com.academy.page;
+package com.academy.core;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,7 +12,7 @@ public class BasePage {
         PageFactory.initElements(driver, this); // необходимо, чтобы проинициализировать аннотированные поля
     }
 
-    public void inputField(WebElement textField, String value) {
+    protected void inputField(WebElement textField, String value) {
         textField.click();
         textField.clear();
         textField.sendKeys(value);

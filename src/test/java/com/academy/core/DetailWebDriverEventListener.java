@@ -1,4 +1,4 @@
-package com.academy.test;
+package com.academy.core;
 
 import com.academy.telesens.util.PropertyProvider;
 import org.openqa.selenium.*;

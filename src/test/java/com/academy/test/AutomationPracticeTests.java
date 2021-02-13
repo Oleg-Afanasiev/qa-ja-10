@@ -1,5 +1,7 @@
 package com.academy.test;
 
+import com.academy.core.AssertWrapper;
+import com.academy.core.BaseTest;
 import com.academy.page.HomePage;
 import com.academy.page.LoginPage;
 import com.academy.page.MyAccountPage;

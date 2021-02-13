@@ -33,4 +33,8 @@ public class PropertyProvider {
     public static String get(String key) {
        return prop.getProperty(key);
     }
+
+    public static boolean getBoolean(String key) {
+        return Boolean.parseBoolean(prop.getProperty(key));
+    }
 }

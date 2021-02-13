@@ -1,5 +1,7 @@
 package com.academy.test;
 
+import com.academy.core.AssertWrapper;
+import com.academy.core.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
@@ -14,7 +16,7 @@ public class AlloTests extends BaseTest {
         String priceRawText = gadget.getText();
         String digits = priceRawText.replaceAll(" ", "");
         int priceActual = Integer.parseInt(digits);
-        int priceExpected = 7499;
+        int priceExpected = 7999;
         AssertWrapper.assertEquals(priceActual, priceExpected);
 
     }
