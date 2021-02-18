@@ -135,6 +135,11 @@ public class SubscriberRestApiTests {
     }
 
     private Subscriber getSubscriberById(int id) {
+        Response response = given().get("/subscribers/{id}", id);
+        if (response.getStatusCode() != 200) {
+            throw new NotFoundSubscriberException(id);
+        }
+
         Subscriber subscriber = new Subscriber();
         subscriber.setFirstName("");
         subscriber.setGender(Gender.parse("f"));
