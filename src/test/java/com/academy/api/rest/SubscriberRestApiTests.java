@@ -79,8 +79,10 @@ public class SubscriberRestApiTests {
 
     @Test
     public void testAddSubscriber() {
+        //  1 шаг - получить тестового абонента (dataProvider)
+        // if exists => delete
+
 //        List<Subscriber> before = getAllSubscribers();
-//        String json = "{\"firstName\":\"Ivan3\",\"lastName\":\"Ivanov3\",\"age\":22,\"gender\":\"m\"}";
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("firstName", "Ivan"); // Cast
         jsonObj.put("lastName", "Ivanov");
@@ -99,6 +101,8 @@ public class SubscriberRestApiTests {
 
 //        List<Subscriber> after = getAllSubscribers();
 //        after.equals(before + 1);
+        // отсортировать списки по id
+        // assert (переопределить метод equals для Subscriber
     }
 
     @Test
@@ -137,12 +141,17 @@ public class SubscriberRestApiTests {
     private Subscriber getSubscriberById(int id) {
         Response response = given().get("/subscribers/{id}", id);
         if (response.getStatusCode() != 200) {
-            throw new NotFoundSubscriberException(id);
+            return null;
         }
 
         Subscriber subscriber = new Subscriber();
         subscriber.setFirstName("");
         subscriber.setGender(Gender.parse("f"));
         return subscriber;
+    }
+
+    private int deleteSubscriber(int id) {
+        int code = 200;
+        return code;
     }
 }
