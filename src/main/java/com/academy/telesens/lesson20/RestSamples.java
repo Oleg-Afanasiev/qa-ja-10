@@ -40,7 +40,7 @@ public class RestSamples {
         Response response = given()
                 .header("Content-Type", "application/json")
                 .body(jsonObj.toJSONString())
-                .put("/subscribers/10");
+                .put("/subscribers/{id}", 11);
 
         int code = response.getStatusCode();
 

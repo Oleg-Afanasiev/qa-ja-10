@@ -69,13 +69,14 @@ public class SubscriberRestApiTests {
                 .get("/subscribers")
                 .then()
                 .assertThat()
+                .statusCode(200)
+                .and()
                 .body("size()", greaterThanOrEqualTo(1))
                 .and()
                 .body("[0].id", equalTo(1))
                 .and()
-                .body("[0].firstName", equalTo("Peter"))
-                .and()
-                .statusCode(200);
+                .body("[0].firstName", equalTo("Peter"));
+
 
     }
 
