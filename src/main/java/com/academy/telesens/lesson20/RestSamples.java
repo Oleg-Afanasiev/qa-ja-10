@@ -13,17 +13,17 @@ public class RestSamples {
         RestAssured.port = 8081;
 //        RestAssured.config().set().
 
-//        getOneSubscriberDemo();
-//        getAllSubscribersDemo();
-//        addSubscriberDemo();
-//        updateSubscriberDemo();
+        getOneSubscriberDemo();
+        getAllSubscribersDemo();
+        addSubscriberDemo();
+        updateSubscriberDemo();
         deleteSubscriberDemo();
     }
 
     private static void deleteSubscriberDemo() {
         System.out.println("***deleteSubscriberDemo***");
         Response response = given()
-                .delete("/subscribers/6668");
+                .delete("/subscribers/{id}", 11);
         int code = response.getStatusCode();
         System.out.println(code);
     }
@@ -31,7 +31,7 @@ public class RestSamples {
     private static void updateSubscriberDemo() {
         System.out.println("***updateSubscriberDemo***");
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("id", 10);
+        jsonObj.put("id", 11);
         jsonObj.put("firstName", "Ivan_upd"); // Cast
         jsonObj.put("lastName", "Ivanov_upd");
         jsonObj.put("age", 68);
@@ -102,7 +102,7 @@ public class RestSamples {
 
     private static String generateSubscriberJson() {
         JSONObject json = new JSONObject();
-//        json.put("id", 10);
+        json.put("id", 11);
         json.put("firstName", "test2");
         json.put("lastName", "test2");
         json.put("age", 27);
