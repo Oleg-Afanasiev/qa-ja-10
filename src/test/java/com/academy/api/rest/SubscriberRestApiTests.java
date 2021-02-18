@@ -1,6 +1,7 @@
 package com.academy.api.rest;
 
 import com.academy.ddt.page.HomePage;
+import com.academy.telesens.lesson06.inheritance.Subscriber;
 import io.netty.handler.logging.LogLevel;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
@@ -12,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
@@ -131,5 +135,13 @@ public class SubscriberRestApiTests {
                 .then()
                 .assertThat()
                 .statusCode(200);
+    }
+
+    private List<Subscriber> getAllSubscribers() {
+        return new ArrayList<>();
+    }
+
+    private Subscriber getSubscriberById(int id) {
+        return new Subscriber();
     }
 }
