@@ -1,5 +1,7 @@
 package com.academy.telesens.lesson07.enumeration;
 
+import org.openqa.selenium.InvalidArgumentException;
+
 public enum Gender {
     MALE("мужч"), // 0
     FEMALE("женщ"); // 1
@@ -19,5 +21,15 @@ public enum Gender {
             System.out.println("Я мужик");
         else
             System.out.println("Я за мужика");
+    }
+
+    public static Gender parse(String g) {
+        if (g.equals("m"))
+            return MALE;
+
+        if (g.equals("f"))
+            return FEMALE;
+
+        throw new InvalidArgumentException("Unknown gender value " + g);
     }
 }

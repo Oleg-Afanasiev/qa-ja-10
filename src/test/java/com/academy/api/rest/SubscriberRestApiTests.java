@@ -1,23 +1,16 @@
 package com.academy.api.rest;
 
-import com.academy.ddt.page.HomePage;
 import com.academy.telesens.lesson06.inheritance.Subscriber;
-import io.netty.handler.logging.LogLevel;
+import com.academy.telesens.lesson07.enumeration.Gender;
 import io.restassured.RestAssured;
-import io.restassured.config.LogConfig;
 import io.restassured.response.Response;
-import org.apache.http.impl.conn.LoggingSessionOutputBuffer;
-import org.apache.logging.log4j.LogManager;
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -86,7 +79,7 @@ public class SubscriberRestApiTests {
 
     @Test
     public void testAddSubscriber() {
-//        List<Abonent> before = getAllSubscribers();
+//        List<Subscriber> before = getAllSubscribers();
 //        String json = "{\"firstName\":\"Ivan3\",\"lastName\":\"Ivanov3\",\"age\":22,\"gender\":\"m\"}";
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("firstName", "Ivan"); // Cast
@@ -104,8 +97,8 @@ public class SubscriberRestApiTests {
                 .header("Location", containsString("http://localhost:8081/rest/json/subscribers"))
                 .statusCode(201);
 
-//        List<Abonent> after = getAllSubscribers();
-//        after.equals(before);
+//        List<Subscriber> after = getAllSubscribers();
+//        after.equals(before + 1);
     }
 
     @Test
@@ -142,6 +135,9 @@ public class SubscriberRestApiTests {
     }
 
     private Subscriber getSubscriberById(int id) {
-        return new Subscriber();
+        Subscriber subscriber = new Subscriber();
+        subscriber.setFirstName("");
+        subscriber.setGender(Gender.parse("f"));
+        return subscriber;
     }
 }

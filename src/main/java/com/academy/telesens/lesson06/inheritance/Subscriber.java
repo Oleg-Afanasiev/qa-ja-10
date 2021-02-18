@@ -4,6 +4,7 @@ import com.academy.telesens.lesson05.oop.Person;
 import com.academy.telesens.lesson07.enumeration.Gender;
 
 public class Subscriber extends Person {
+
     private String phoneNumber;
     private Operator operator;
 
