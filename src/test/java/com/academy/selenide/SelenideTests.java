@@ -24,13 +24,10 @@ public class SelenideTests {
     }
 
     @Test
-    public void testAddSubscriber() {
+    public void testAddSubscriber(Subscriber subscriber) {
         HomePage homePage = open(baseUrl, HomePage.class);
         SubscribersPage subscribersPage = homePage.goToSubscriber();
-
-        Subscriber subscriberById = subscribersPage.getSubscriberById(1);
-        System.out.println(subscriberById);
-        List<Subscriber> allSubscribers = subscribersPage.getAllSubscribers();
+        List<Subscriber> before = subscribersPage.getAllSubscribers();
 
         $(By.id("add")).click();
         $(By.id("fname")).setValue("test2");
