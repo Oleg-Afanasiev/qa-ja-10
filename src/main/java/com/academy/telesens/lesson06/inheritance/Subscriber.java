@@ -3,6 +3,8 @@ package com.academy.telesens.lesson06.inheritance;
 import com.academy.telesens.lesson05.oop.Person;
 import com.academy.telesens.lesson07.enumeration.Gender;
 
+import java.util.Objects;
+
 public class Subscriber extends Person {
     private int id;
     private String phoneNumber;
@@ -87,5 +89,19 @@ public class Subscriber extends Person {
                 ", age=" + age +
                 ", gender=" + gender +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Subscriber)) return false;
+        if (!super.equals(o)) return false;
+        Subscriber that = (Subscriber) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id);
     }
 }

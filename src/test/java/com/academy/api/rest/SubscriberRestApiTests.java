@@ -5,11 +5,13 @@ import com.academy.telesens.lesson07.enumeration.Gender;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.json.simple.JSONObject;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -88,25 +90,32 @@ public class SubscriberRestApiTests {
 
         List<Subscriber> before = getAllSubscribers();
 
-        JSONObject jsonObj = new JSONObject();
-        jsonObj.put("id", subscriber.getId());
-        jsonObj.put("firstName", subscriber.getFirstName());
-        jsonObj.put("lastName", subscriber.getLastName());
-        jsonObj.put("age", subscriber.getAge());
-        jsonObj.put("gender", subscriber.getGender().toValue());
+        JSONObject newSubscriberJson = new JSONObject();
+        newSubscriberJson.put("id", subscriber.getId());
+        newSubscriberJson.put("firstName", subscriber.getFirstName());
+        newSubscriberJson.put("lastName", subscriber.getLastName());
+        newSubscriberJson.put("age", subscriber.getAge());
+        newSubscriberJson.put("gender", subscriber.getGender().toValue());
 
         given()
                 .log().all()
                 .header("Content-Type", "application/json")
-                .body(jsonObj.toJSONString())
+                .body(newSubscriberJson.toJSONString())
                 .post("/subscribers")
                 .then()
                 .assertThat()
                 .header("Location", containsString("http://localhost:8081/rest/json/subscribers"))
                 .statusCode(201);
 
-//        List<Subscriber> after = getAllSubscribers();
-//        after.equals(before + 1);
+        List<Subscriber> after = getAllSubscribers();
+        Assert.assertEquals(after.size(), before.size() + 1);
+        before.add(subscriber);
+
+//        after.sort((s1, s2)-> Integer.compare(s1.getId(), s2.getId()));
+        before.sort(Comparator.comparingInt(Subscriber::getId));
+        after.sort(Comparator.comparingInt(Subscriber::getId));
+        Assert.assertEquals(after, before);
+
         // отсортировать списки по id
         // assert (переопределить метод equals для Subscriber
     }
@@ -141,7 +150,30 @@ public class SubscriberRestApiTests {
     }
 
     private List<Subscriber> getAllSubscribers() {
-        return new ArrayList<>();
+        Response response = given().get("/subscribers");
+        if (response.getStatusCode() != 200) {
+            return null;
+        }
+        List<Subscriber> subscribers = new ArrayList<>();
+
+        int size = response.getBody().path("size()");
+        for (int i = 0; i < size; i++) {
+            int idResp = response.getBody().path("[%s].id", String.valueOf(i));
+            String fName = response.getBody().path("[%s].firstName", String.valueOf(i));
+            String lName = response.getBody().path("[%s].lastName", String.valueOf(i));
+            Gender gender = Gender.parse(response.getBody().path("[%s].gender", String.valueOf(i)));
+            int age = response.getBody().path("[%s].age", String.valueOf(i));
+
+            Subscriber subscriber = new Subscriber();
+            subscriber.setId(idResp);
+            subscriber.setFirstName(fName);
+            subscriber.setLastName(lName);
+            subscriber.setGender(gender);
+            subscriber.setAge(age);
+
+            subscribers.add(subscriber);
+        }
+        return subscribers;
     }
 
     private Subscriber getSubscriberById(int id) {
@@ -150,15 +182,25 @@ public class SubscriberRestApiTests {
             return null;
         }
 
+        int idResp = response.getBody().path("id");
+        String fName = response.getBody().path("firstName");
+        String lName = response.getBody().path("lastName");
+        Gender gender = Gender.parse(response.getBody().path("gender"));
+        int age = response.getBody().path("age");
+
         Subscriber subscriber = new Subscriber();
-        subscriber.setFirstName("");
-        subscriber.setGender(Gender.parse("f"));
+        subscriber.setId(idResp);
+        subscriber.setFirstName(fName);
+        subscriber.setLastName(lName);
+        subscriber.setGender(gender);
+        subscriber.setAge(age);
+
         return subscriber;
     }
 
     private int deleteSubscriber(int id) {
-        int code = 200;
-        return code;
+        Response response = given().delete("/subscribers/{id}", id);
+        return response.getStatusCode();
     }
 
     @DataProvider(name="subscriberProvider")
