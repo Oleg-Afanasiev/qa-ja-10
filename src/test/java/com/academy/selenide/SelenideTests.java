@@ -1,15 +1,16 @@
 package com.academy.selenide;
 
+import com.academy.selenide.page.HomePage;
 import com.codeborne.selenide.Configuration;
+import org.openqa.selenium.By;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Selenide.closeWindow;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class SelenideTests {
-    private String baseUrl = "http://localhost:8081/subscribers";
+    private String baseUrl = "http://localhost:8081";
 
     @BeforeClass
     public void beforeClass() {
@@ -20,12 +21,14 @@ public class SelenideTests {
 
     @Test
     public void testAddSubscriber() {
-        open(baseUrl);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        HomePage homePage = open(baseUrl, HomePage.class);
+        homePage.goToSubscriber();
+        $(By.id("add")).click();
+        $(By.id("fname")).setValue("test2");
+        $(By.id("lname")).setValue("test2");
+        $(By.id("FEMALE")).click();
+        $(By.id("age")).setValue("24");
+        $("body > div > form > button").click();
     }
 
     @AfterClass
