@@ -14,10 +14,10 @@ public class SubscribersPage {
     @FindBy(css = "a[name='contact-edit-id']")
     private List<SelenideElement> idS;
 
-    @FindBy(css = "body > div > div:nth-child(4) > div > table > tbody > tr > td:nth-child(3)")
+    @FindBy(css = "tr > td:nth-child(3)")
     private List<SelenideElement> fNames;
 
-    private String fNameByIdXPath = "/html/body/div/div[4]/div/table/tbody/tr[td/a[text() = '%d']]/td[3]";
+    private String fNameByIdXPathTempl = "//tr[td/a[text() = '%d']]/td[3]";
 
     public List<Subscriber> getAllSubscribers() {
         List<Subscriber> subscribers = new ArrayList<>();
@@ -31,7 +31,7 @@ public class SubscribersPage {
     }
 
     public Subscriber getSubscriberById(int id) {
-        String fName = $(By.xpath(String.format(fNameByIdXPath, id))).text();
+        String fName = $(By.xpath(String.format(fNameByIdXPathTempl, id))).text();
         Subscriber subscriber = new Subscriber();
         subscriber.setFirstName(fName);
         return subscriber;
