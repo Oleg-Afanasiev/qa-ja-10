@@ -90,34 +90,17 @@ public class SubscriberRestApiTests {
 
         List<Subscriber> before = getAllSubscribers();
 
-        JSONObject newSubscriberJson = new JSONObject();
-        newSubscriberJson.put("id", subscriber.getId());
-        newSubscriberJson.put("firstName", subscriber.getFirstName());
-        newSubscriberJson.put("lastName", subscriber.getLastName());
-        newSubscriberJson.put("age", subscriber.getAge());
-        newSubscriberJson.put("gender", subscriber.getGender().toValue());
-
-        given()
-                .log().all()
-                .header("Content-Type", "application/json")
-                .body(newSubscriberJson.toJSONString())
-                .post("/subscribers")
-                .then()
-                .assertThat()
-                .header("Location", containsString("http://localhost:8081/rest/json/subscribers"))
-                .statusCode(201);
+        addSubscriber(subscriber);
 
         List<Subscriber> after = getAllSubscribers();
         Assert.assertEquals(after.size(), before.size() + 1);
         before.add(subscriber);
 
+        // отсортировать списки по id
 //        after.sort((s1, s2)-> Integer.compare(s1.getId(), s2.getId()));
         before.sort(Comparator.comparingInt(Subscriber::getId));
         after.sort(Comparator.comparingInt(Subscriber::getId));
         Assert.assertEquals(after, before);
-
-        // отсортировать списки по id
-        // assert (переопределить метод equals для Subscriber
     }
 
     @Test
@@ -201,6 +184,23 @@ public class SubscriberRestApiTests {
     private int deleteSubscriber(int id) {
         Response response = given().delete("/subscribers/{id}", id);
         return response.getStatusCode();
+    }
+
+    private int addSubscriber(Subscriber subscriber) {
+        JSONObject newSubscriberJson = new JSONObject();
+        newSubscriberJson.put("id", subscriber.getId());
+        newSubscriberJson.put("firstName", subscriber.getFirstName());
+        newSubscriberJson.put("lastName", subscriber.getLastName());
+        newSubscriberJson.put("age", subscriber.getAge());
+        newSubscriberJson.put("gender", subscriber.getGender().toValue());
+
+        Response response = given()
+                .log().all()
+                .header("Content-Type", "application/json")
+                .body(newSubscriberJson.toJSONString())
+                .post("/subscribers");
+
+        return response.statusCode();
     }
 
     @DataProvider(name="subscriberProvider")
