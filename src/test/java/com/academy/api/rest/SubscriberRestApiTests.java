@@ -6,6 +6,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.json.simple.JSONObject;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -77,17 +78,22 @@ public class SubscriberRestApiTests {
 
     }
 
-    @Test
-    public void testAddSubscriber() {
+    @Test(dataProvider = "subscriberProvider")
+    public void testAddSubscriber(Subscriber subscriber) {
         //  1 шаг - получить тестового абонента (dataProvider)
         // if exists => delete
+        if (getSubscriberById(subscriber.getId()) != null) {
+            deleteSubscriber(subscriber.getId());
+        }
 
-//        List<Subscriber> before = getAllSubscribers();
+        List<Subscriber> before = getAllSubscribers();
+
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("firstName", "Ivan"); // Cast
-        jsonObj.put("lastName", "Ivanov");
-        jsonObj.put("age", 68);
-        jsonObj.put("gender", "m");
+        jsonObj.put("id", subscriber.getId());
+        jsonObj.put("firstName", subscriber.getFirstName());
+        jsonObj.put("lastName", subscriber.getLastName());
+        jsonObj.put("age", subscriber.getAge());
+        jsonObj.put("gender", subscriber.getGender().toValue());
 
         given()
                 .log().all()
@@ -153,5 +159,19 @@ public class SubscriberRestApiTests {
     private int deleteSubscriber(int id) {
         int code = 200;
         return code;
+    }
+
+    @DataProvider(name="subscriberProvider")
+    public Object[][] subscriberProvider() {
+        Subscriber subscriber = new Subscriber();
+        subscriber.setId(10);
+        subscriber.setFirstName("Петр");
+        subscriber.setLastName("Петров");
+        subscriber.setGender(Gender.MALE);
+        subscriber.setAge(25);
+
+        return new Object[][] {
+                {subscriber}
+        };
     }
 }

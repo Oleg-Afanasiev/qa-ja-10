@@ -4,7 +4,7 @@ import com.academy.telesens.lesson05.oop.Person;
 import com.academy.telesens.lesson07.enumeration.Gender;
 
 public class Subscriber extends Person {
-
+    private int id;
     private String phoneNumber;
     private Operator operator;
 
@@ -27,6 +27,15 @@ public class Subscriber extends Person {
     }
 
     // set/get
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
