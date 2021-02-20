@@ -29,21 +29,27 @@
             <version>8.0.23</version>
         </dependency>
         <!--Selenium-->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>4.0.0-alpha-7</version>
+<!--        <dependency>-->
+<!--            <groupId>org.seleniumhq.selenium</groupId>-->
+<!--            <artifactId>selenium-java</artifactId>-->
+<!--            <version>4.0.0-alpha-7</version>-->
 <!--            <exclusions>-->
 <!--                <exclusion>-->
 <!--                    <groupId>junit</groupId>-->
 <!--                    <artifactId></artifactId>-->
 <!--                </exclusion>-->
 <!--            </exclusions>-->
-        </dependency>
+<!--        </dependency>-->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.3.0</version>
+        </dependency>
+        <!--Selenide-->
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>5.18.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

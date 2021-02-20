@@ -22,6 +22,7 @@ import org.testng.annotations.*;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class BaseTest {
@@ -68,7 +69,8 @@ public class BaseTest {
                         String.format("Browser %s not supported", browser));
         }
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // selenium 4...
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // selenium 3...
         driver.manage().window().maximize();
         eventListener = new DetailWebDriverEventListener(logPerformance, logBrowser);
         driver.register(eventListener);
