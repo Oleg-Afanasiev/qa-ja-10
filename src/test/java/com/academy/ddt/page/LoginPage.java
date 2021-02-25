@@ -1,6 +1,7 @@
 package com.academy.ddt.page;
 
 import com.academy.ddt.core.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +10,7 @@ public class LoginPage extends BasePage {
     @FindBy(id="email")
     private WebElement loginField;
 
-    @FindBy(id="passwd1")
+    @FindBy(id="passwd")
     private WebElement passwordField;
 
 //    @FindBy(xpath = "//button[@id='SubmitLogin']/span")
@@ -39,11 +40,13 @@ public class LoginPage extends BasePage {
         return this;
     }
 
+    @Step("submit")
     public LoginPage submit() {
         submitButton.click();
         return this;
     }
 
+    @Step("submit")
     public MyAccountPage submitSuccess() {
         submitButton.click();
         return new MyAccountPage(driver);
