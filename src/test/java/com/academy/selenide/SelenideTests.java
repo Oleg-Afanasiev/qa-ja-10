@@ -7,10 +7,12 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -31,17 +33,30 @@ public class SelenideTests {
     }
 
     @Test
-    public void testAddSubscriber() {
+    public void testAddSubscriber(Subscriber expectedSubscriber) {
         HomePage homePage = open(baseUrl, HomePage.class);
         SubscribersPage subscribersPage = homePage.goToSubscriber();
         List<Subscriber> before = subscribersPage.getAllSubscribers();
 
+        // add new subscriber
         $(By.id("add")).click();
         $(By.id("fname")).setValue("test2");
-        $(By.id("lname1")).setValue("test2");
+        $(By.id("lname")).setValue("test2");
         $(By.id("FEMALE")).click();
         $(By.id("age")).setValue("24");
         $("body > div > form > button").click();
+
+        Subscriber actualSubscriber = subscribersPage.getLastSubscriber();
+        Assert.assertEquals(actualSubscriber, expectedSubscriber);
+
+        List<Subscriber> after = subscribersPage.getAllSubscribers();
+        Assert.assertEquals(after.size(), before.size() + 1);
+        before.add(actualSubscriber);
+        // sort by id
+        before.sort(Comparator.comparingInt(Subscriber::getId));
+        after.sort(Comparator.comparingInt(Subscriber::getId));
+
+        Assert.assertEquals(after, before);
     }
 
     @AfterClass

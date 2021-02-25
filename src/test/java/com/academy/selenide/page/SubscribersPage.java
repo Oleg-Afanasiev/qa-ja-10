@@ -30,6 +30,12 @@ public class SubscribersPage {
         return subscribers;
     }
 
+    public Subscriber getLastSubscriber() {
+        Subscriber subscriber = new Subscriber();
+
+        return subscriber;
+    }
+
     public Subscriber getSubscriberById(int id) {
         String fName = $(By.xpath(String.format(fNameByIdXPathTempl, id))).text();
         Subscriber subscriber = new Subscriber();
