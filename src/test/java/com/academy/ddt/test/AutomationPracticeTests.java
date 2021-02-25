@@ -5,6 +5,9 @@ import com.academy.ddt.core.BaseTest;
 import com.academy.ddt.page.HomePage;
 import com.academy.ddt.page.LoginPage;
 import com.academy.ddt.page.MyAccountPage;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -43,6 +46,8 @@ public class AutomationPracticeTests extends BaseTest {
     }
 
     @Test(dataProvider = "authDataProvider")
+    @Description("Test description")
+    @Severity(SeverityLevel.NORMAL)
     public void testAuthUsingPageObject(String userName, String password, String errMsgExpected) {
         // Шаги
         HomePage homePage = new HomePage(driver, baseUrl);

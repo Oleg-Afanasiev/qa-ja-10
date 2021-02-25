@@ -66,6 +66,8 @@ public class DetailWebDriverEventListener extends AbstractWebDriverEventListener
         makeScreenshot(driver);
     }
 
+
+
     public void makeScreenshot(WebDriver driver) {
         String screenshotDir = PropertyProvider.get("screenshot.dir");
         File tmp = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);

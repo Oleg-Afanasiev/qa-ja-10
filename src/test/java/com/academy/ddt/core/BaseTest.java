@@ -1,13 +1,17 @@
 package com.academy.ddt.core;
 
 import com.academy.telesens.util.PropertyProvider;
+import io.qameta.allure.Attachment;
+import junit.framework.TestListener;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.client.ClientUtil;
 import net.lightbody.bmp.core.har.Har;
 import net.lightbody.bmp.core.har.HarEntry;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -25,6 +29,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+@Listeners(TestListenerImpl.class)
 public class BaseTest {
     private static Logger LOG = LoggerFactory.getLogger(BaseTest.class);
     private static Logger LOG_TRAFFIC = LoggerFactory.getLogger("TRAFFIC");
@@ -46,6 +51,7 @@ public class BaseTest {
                 System.setProperty("webdriver.chrome.driver", PropertyProvider.get("driver.chrome"));
 
                 ChromeOptions options = new ChromeOptions();
+                Cookie cookie = new Cookie("", "");
 
                 if (logTraffic) {
                     initProxyForTraffic(options);
@@ -72,6 +78,7 @@ public class BaseTest {
 //        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // selenium 4...
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // selenium 3...
         driver.manage().window().maximize();
+//        driver.manage().addCookie(cookie);
         eventListener = new DetailWebDriverEventListener(logPerformance, logBrowser);
         driver.register(eventListener);
     }
@@ -99,6 +106,11 @@ public class BaseTest {
 
     protected void makeScreenshot() {
         eventListener.makeScreenshot(driver);
+    }
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    protected byte[] makeScreenshotForReport() {
+        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
     }
 
     private void initCfg() {
