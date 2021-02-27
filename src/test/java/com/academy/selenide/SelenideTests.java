@@ -63,7 +63,6 @@ public class SelenideTests {
         before.sort(Comparator.comparingInt(Subscriber::getId));
         after.sort(Comparator.comparingInt(Subscriber::getId));
 
-
         Assert.assertEquals(after, before);
     }
 

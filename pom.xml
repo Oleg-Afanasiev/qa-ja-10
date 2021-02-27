@@ -135,7 +135,7 @@
                             <suiteXmlFiles>
                                 <suiteXmlFile>suits/testng-default.xml</suiteXmlFile>
                             </suiteXmlFiles>
-                            <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.6/aspectjweaver-1.9.6.jar"</argLine>
+<!--                            <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.6/aspectjweaver-1.9.6.jar"</argLine>-->
                         </configuration>
                     </plugin>
                 </plugins>
