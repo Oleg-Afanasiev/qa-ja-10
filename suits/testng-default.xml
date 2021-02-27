@@ -4,7 +4,7 @@
     <test name="automation practice demo">
         <parameter name="browser" value="chrome" />
         <classes>
-            <class name="com.academy.ddt.test.AutomationPracticeTests" />
+            <class name="com.academy.selenide.SelenideTests" />
 <!--            <class name="com.academy.bdd.AuthTests" />-->
         </classes>
     </test>

@@ -24,10 +24,10 @@ public enum Gender {
     }
 
     public static Gender parse(String g) {
-        if (g.equals("m"))
+        if (g.equals("m") || g.equals("м"))
             return MALE;
 
-        if (g.equals("f"))
+        if (g.equals("f") || g.equals("ж"))
             return FEMALE;
 
         throw new InvalidArgumentException("Unknown gender value " + g);
